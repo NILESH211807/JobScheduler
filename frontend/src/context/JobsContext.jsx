@@ -2,7 +2,22 @@
 import React, { createContext, useContext, useState } from "react";
 
 // create context
-export const JobsContext = createContext();
+export const JobsContext = createContext({
+    jobs: [],
+    setJobs: () => {},
+    loading: true,
+    setLoading: () => {},
+    staticJobs: {
+        total: 0,
+        pending: 0,
+        running: 0,
+        completed: 0,
+        failed: 0
+    },
+    setStaticJobs: () => {},
+    viewMode: 'list',
+    setViewMode: () => {}
+});
 
 // create provider
 export const JobsProvider = ({ children }) => {
@@ -17,7 +32,6 @@ export const JobsProvider = ({ children }) => {
         completed: 0,
         failed: 0
     });
-
 
     const values = {
         jobs,
