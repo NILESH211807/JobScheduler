@@ -1,10 +1,10 @@
-import { Loader2, MoreHorizontal, Play, RefreshCw, View } from "lucide-react";
+import { ArrowUpRight, Loader2, MoreHorizontal, Play, RefreshCw, View } from "lucide-react";
 import EmptyState from "./EmptyState";
 import { PriorityBadge } from "./PriorityBadge";
 import StatusBadge from "./StatusBadge";
 import { dateFormat } from "@/utils/helper";
 
-export default function ListView({ filteredJobs, onRunJob }) {
+export default function ListView({ filteredJobs, onRunJob, getJobDetails }) {
 
     return (
         <div className="border border-zinc-800 rounded-lg overflow-hidden bg-zinc-900/30">
@@ -46,7 +46,7 @@ export default function ListView({ filteredJobs, onRunJob }) {
                             </div>
 
                             <div className="col-span-1 mt-3 md:mt-0 flex justify-end">
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-3">
                                     <button
                                         onClick={() => onRunJob(job.id)}
                                         disabled={job.status === 'running' || job.status === 'completed'}
@@ -62,8 +62,8 @@ export default function ListView({ filteredJobs, onRunJob }) {
                                             <Loader2 size={14} className="animate-spin" /> :
                                             <Play size={14} />}
                                     </button>
-                                    <button className="h-8 w-8 flex items-center justify-center rounded-md border transition-all bg-zinc-950 border-zinc-800 cursor-pointer text-zinc-400">
-                                        <View size={16} />
+                                    <button onClick={() => getJobDetails(job)} className="h-8 w-8 flex items-center justify-center rounded-md border transition-all bg-zinc-950 border-zinc-800 cursor-pointer text-zinc-400">
+                                        <ArrowUpRight size={18} />
                                     </button>
                                 </div>
                             </div>

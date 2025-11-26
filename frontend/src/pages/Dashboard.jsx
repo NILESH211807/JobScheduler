@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, Activity } from 'react';
 import {
     Plus,
     Search,
@@ -16,7 +16,7 @@ import {
     LayoutGrid,
     List,
     RefreshCw,
-    Activity,
+    Activity as ActivityIcon,
     BadgeCheck,
     Loader,
     Clock2
@@ -33,24 +33,32 @@ import { GridView } from '@/components/JobViewModeGrid';
 import FilterSelect from '@/components/FilterSelect';
 import PaginationTool from '@/components/PaginationTool';
 import SearchQuery from '@/components/SearchQuery';
+import JobDetails from '@/components/JobDetails';
 
 
 export default function Dashboard() {
 
     const { staticJobs, setStaticJobs, viewMode } = useJobs();
     const [isLoading, setIsLoading] = useState(true);
-
     const [jobs, setJobs] = useState([]);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [statusFilter, setStatusFilter] = useState('all');
     const [priorityFilter, setPriorityFilter] = useState('all');
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
     const [runningJobIds, setRunningJobIds] = useState([]);
     const [loadingMore, setLoadingMore] = useState(false);
     const [totalPages, setTotalPages] = useState(1);
     const [query, setQuery] = useState("");
+    const [selectedJob, setSelectedJob] = useState({
+        id: null,
+        task_name: "",
+        status: "",
+        priority: "",
+        created_at: "",
+        updated_at: "",
+    });
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // fetch stats data
     const fetchStatsData = useCallback(async () => {
@@ -72,9 +80,6 @@ export default function Dashboard() {
             setIsLoading(false);
         }
     }, [setStaticJobs]);
-
-    console.log('priorityFilter', priorityFilter);
-
 
     // fetch jobs data
     const fetchJobs = useCallback(async (page = 1, limit = 10) => {
@@ -120,14 +125,6 @@ export default function Dashboard() {
         fetchStatsData();
         fetchJobs();
     }, []);
-
-    // // Filter Logic
-    // const filteredJobs = jobs.filter(job => {
-    //     const matchesStatus = statusFilter === 'all' || job.status === statusFilter?.toLowerCase();
-    //     const matchesPriority = priorityFilter === 'all' || job?.priority?.toLowerCase() === priorityFilter;
-    //     const matchesSearch = job?.task_name?.toLowerCase()?.includes(searchQuery.toLowerCase());
-    //     return matchesStatus && matchesPriority && matchesSearch;
-    // });
 
     // Action Handlers
     const handleRunJob = async (id) => {
@@ -187,6 +184,13 @@ export default function Dashboard() {
         return () => clearInterval(interval);
     }, [runningJobIds]);
 
+
+    // getJobDetails
+    const getJobDetails = useCallback((data) => {
+        setSelectedJob(data);
+        setIsModalOpen(true);
+    }, [setSelectedJob, setIsModalOpen])
+
     if (isLoading) return <LoadingSpinner />;
 
     return (
@@ -198,7 +202,7 @@ export default function Dashboard() {
                     <StatCard
                         label="Total Workflows"
                         value={staticJobs?.total}
-                        icon={Activity}
+                        icon={ActivityIcon}
                     />
                     <StatCard
                         label="Completed"
@@ -257,7 +261,9 @@ export default function Dashboard() {
                     ) : (
                         <>
                             {viewMode === 'list' ? (
-                                <ListView filteredJobs={jobs} onRunJob={handleRunJob} />
+                                <ListView
+                                    getJobDetails={getJobDetails}
+                                    filteredJobs={jobs} onRunJob={handleRunJob} />
                             ) : (
                                 <GridView filteredJobs={jobs} onRunJob={handleRunJob} />
                             )}
@@ -276,13 +282,21 @@ export default function Dashboard() {
 
             </main>
 
-            {/* Modern Modal */}
-            {isCreateModalOpen && (
+            {/*  Modal */}
+            <Activity mode={isCreateModalOpen ? "visible" : "hidden"}>
                 <JobForm setJobs={setJobs}
                     setIsCreateModalOpen={setIsCreateModalOpen} />
-            )}
+            </Activity>
 
 
+            {/* job details modal */}
+            <Activity mode={isModalOpen ? "visible" : "hidden"}>
+                <JobDetails
+                    isModalOpen={isModalOpen}
+                    setIsModalOpen={setIsModalOpen}
+                    job={selectedJob}
+                />
+            </Activity>
         </div>
     );
 }
