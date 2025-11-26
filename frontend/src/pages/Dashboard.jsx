@@ -108,7 +108,6 @@ export default function Dashboard() {
     // handle job stats 
     useEffect(() => {
         fetchStatsData();
-        fetchJobs();
     }, []);
 
     // Action Handlers

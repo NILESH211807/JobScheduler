@@ -41,7 +41,7 @@ export default function ListView({ filteredJobs, onRunJob, getJobDetails }) {
                                 <PriorityBadge priority={job.priority} />
                             </div>
 
-                            <div className="col-span-2 mt-2 md:mt-0 text-sm text-zinc-400 font-mono text-xs">
+                            <div className="col-span-2 min-md:-ml-7 mt-2 md:mt-0 text-sm text-zinc-400 font-mono text-xs">
                                 {dateFormat(job.updatedAt)}
                             </div>
 
