@@ -1,21 +1,6 @@
 "use client";
-import React, { useState, useMemo, useEffect, useCallback, Activity } from 'react';
+import React, { useState, useEffect, useCallback, Activity } from 'react';
 import {
-    Plus,
-    Search,
-    Filter,
-    MoreHorizontal,
-    Play,
-    Clock,
-    CheckCircle2,
-    AlertCircle,
-    Loader2,
-    Calendar,
-    X,
-    ChevronDown,
-    LayoutGrid,
-    List,
-    RefreshCw,
     Activity as ActivityIcon,
     BadgeCheck,
     Loader,
@@ -230,7 +215,6 @@ export default function Dashboard() {
                 {/* Toolbar */}
                 <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
                     <SearchQuery query={query} setQuery={setQuery} />
-
                     <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
                         <FilterSelect
                             value={statusFilter}
@@ -265,7 +249,7 @@ export default function Dashboard() {
                                     getJobDetails={getJobDetails}
                                     filteredJobs={jobs} onRunJob={handleRunJob} />
                             ) : (
-                                <GridView filteredJobs={jobs} onRunJob={handleRunJob} />
+                                <GridView getJobDetails={getJobDetails} filteredJobs={jobs} onRunJob={handleRunJob} />
                             )}
                         </>
                     )

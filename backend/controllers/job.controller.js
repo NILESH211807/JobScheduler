@@ -12,17 +12,12 @@ export const createJob = async (req, res) => {
 
         const { task_name, priority, payload } = value;
 
-        const sql = `
-      INSERT INTO jobs (task_name, priority, payload)
-      VALUES (?, ?, ?)
-      `;
-
-        // Prepare the values to be inserted
+        const sql = ` INSERT INTO jobs (task_name, priority, payload) VALUES (?, ?, ?)`;
 
         const values = [
             task_name,
             priority,
-            JSON.stringify(payload)
+            payload
         ];
 
         // Execute the query
@@ -124,6 +119,11 @@ export const getAllJobs = async (req, res) => {
         const [countRows] = await pool.query(countSql, countParams);
 
         const total = countRows[0].total;
+
+        // const data = rows.map(row => ({
+        //     ...row,
+        //     payload: JSON.parse(row.payload)
+        // }));
 
         res.json({
             message: "Jobs fetched successfully",

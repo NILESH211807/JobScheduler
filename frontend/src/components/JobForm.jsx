@@ -1,5 +1,5 @@
 "use client";
-import { Loader, LoaderCircle, X } from "lucide-react";
+import { LoaderCircle, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,7 +28,7 @@ const formSchema = yup.object().shape({
 export default function JobForm({ setIsCreateModalOpen, setJobs }) {
 
     // form
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(formSchema),
     });
 
@@ -48,12 +48,16 @@ export default function JobForm({ setIsCreateModalOpen, setJobs }) {
             if (res?.message === "Job created successfully") {
                 toast.success(res.message);
                 setJobs((prev) => {
-                    const newArr = prev.slice(0, -1);
-                    return [res.data, ...newArr];
+                    if (prev.length >= 10) {
+                        const newArr = prev.slice(0, -1);
+                        return [res.data, ...newArr];
+                    }
+                    return [res.data, ...prev];
                 });
 
                 setStaticJobs((prev) => ({ ...prev, total: prev.total + 1, pending: prev.pending + 1 }))
                 setIsCreateModalOpen(false);
+                reset();
             } else {
                 toast.error(res.message);
             }

@@ -1,8 +1,8 @@
 export const PriorityBadge = ({ priority }) => {
     const styles = {
-        High: "bg-red-500/10 text-red-400 border-red-500/20",
-        Medium: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-        Low: "bg-blue-500/10 text-blue-400 border-blue-500/20"
+        high: "bg-red-500/10 text-red-400 border-red-500/20",
+        medium: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+        low: "bg-blue-500/10 text-blue-400 border-blue-500/20"
     };
 
     return (

@@ -8,11 +8,15 @@ function JobDetails({ job, setIsModalOpen }) {
     const [isCopied, setIsCopied] = useState(false);
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(JSON.stringify(JSON.parse(job?.payload), null, 2));
-        setIsCopied(true);
-        setTimeout(() => {
-            setIsCopied(false);
-        }, 2000);
+        try {
+            const formatted = JSON.stringify(JSON.parse(job?.payload), null, 2);
+            navigator.clipboard.writeText(formatted);
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000);
+        } catch (err) {
+            console.error("Invalid JSON in payload:", err);
+            alert("failed to copy");
+        }
     };
 
     if (!job) return null;
@@ -58,7 +62,7 @@ function JobDetails({ job, setIsModalOpen }) {
                                 <label className="text-xs font-medium text-zinc-400 capitalize  flex items-center gap-2">
                                     <Calendar size={12} /> Created At
                                 </label>
-                                <p className="text-zinc-200 text-sm font-medium">{job.created_at}</p>
+                                <p className="text-zinc-200 text-sm font-medium">{job.createdAt}</p>
                             </div>
 
                             <div className="space-y-1.5">
@@ -87,7 +91,7 @@ function JobDetails({ job, setIsModalOpen }) {
                         <div className="bg-zinc-950 border border-zinc-800 rounded-lg overflow-hidden">
                             {/* Visual Key-Value View */}
                             <div className="grid grid-cols-1 divide-y divide-zinc-800/50">
-                                {Object.entries(JSON.parse(job?.payload) || {}).map(([key, value]) => (
+                                {Object.entries(JSON.parse(job.payload) || {}).map(([key, value]) => (
                                     <div
                                         key={key}
                                         className="flex flex-col sm:flex-row sm:items-start p-3 hover:bg-zinc-900/30 transition-colors gap-2 sm:gap-4"
