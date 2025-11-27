@@ -120,11 +120,6 @@ export const getAllJobs = async (req, res) => {
 
         const total = countRows[0].total;
 
-        // const data = rows.map(row => ({
-        //     ...row,
-        //     payload: JSON.parse(row.payload)
-        // }));
-
         res.json({
             message: "Jobs fetched successfully",
             page,

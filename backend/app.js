@@ -5,6 +5,7 @@ import cors from "cors";
 
 import jobsRouter from "./routes/job.router.js";
 import dashRouter from "./routes/dash.router.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -21,6 +22,8 @@ app.use(cors(corsOptions));
 
 // middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(errorHandler);
 
 // routes
 app.use("/api/jobs", jobsRouter);
