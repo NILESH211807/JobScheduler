@@ -42,7 +42,7 @@ export default function ListView({ filteredJobs, onRunJob, getJobDetails }) {
                             </div>
 
                             <div className="col-span-2 min-md:-ml-7 mt-2 md:mt-0 text-sm text-zinc-400 font-mono text-xs">
-                                {dateFormat(job.updatedAt)}
+                                {dateFormat(job.updated_at)}
                             </div>
 
                             <div className="col-span-1 mt-3 md:mt-0 flex justify-end">

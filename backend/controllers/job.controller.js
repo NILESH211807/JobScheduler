@@ -31,8 +31,8 @@ export const createJob = async (req, res) => {
                 priority,
                 payload,
                 status: "pending",
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString()
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
             }
         });
 
@@ -211,7 +211,7 @@ export const runJobById = async (req, res) => {
         await new Promise(resolve => setTimeout(resolve, 3000));
 
         // 4. Update → completed
-        const updateCompletedSql = `UPDATE jobs SET status = 'completed', updatedAt = NOW() WHERE id = ?`;
+        const updateCompletedSql = `UPDATE jobs SET status = 'completed', updated_at = NOW() WHERE id = ?`;
         await pool.query(updateCompletedSql, [jobId]);
 
         const completedAt = new Date().toISOString();

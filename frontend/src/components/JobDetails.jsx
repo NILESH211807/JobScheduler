@@ -62,14 +62,14 @@ function JobDetails({ job, setIsModalOpen }) {
                                 <label className="text-xs font-medium text-zinc-400 capitalize  flex items-center gap-2">
                                     <Calendar size={12} /> Created At
                                 </label>
-                                <p className="text-zinc-200 text-sm font-medium">{job.createdAt}</p>
+                                <p className="text-zinc-200 text-sm font-medium">{job.created_at}</p>
                             </div>
 
                             <div className="space-y-1.5">
                                 <label className="text-xs font-medium text-zinc-400 capitalize flex items-center gap-2">
                                     <RefreshCw size={12} /> Updated At
                                 </label>
-                                <p className="text-zinc-200 text-sm font-medium">{job.updatedAt}</p>
+                                <p className="text-zinc-200 text-sm font-medium">{job.updated_at}</p>
                             </div>
                         </div>
                     </div>

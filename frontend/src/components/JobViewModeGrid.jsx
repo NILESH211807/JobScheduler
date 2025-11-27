@@ -15,7 +15,7 @@ export const GridView = ({ filteredJobs, onRunJob, getJobDetails }) => {
                         <StatusBadge status={job.status} />
                     </div>
                     <h3 className="font-medium text-zinc-200 mb-1">{job?.task_name?.length > 30 ? job.task_name.slice(0, 20) + '...' : job.task_name}</h3>
-                    <p className="text-xs text-zinc-500 mb-4">UpdatedAt: {dateFormat(job.updatedAt)}</p>
+                    <p className="text-xs text-zinc-500 mb-4">updated_at: {dateFormat(job.updated_at)}</p>
 
                     <div className="flex items-center justify-between mt-auto pt-4 border-t border-zinc-800/50">
                         <PriorityBadge priority={job.priority} />

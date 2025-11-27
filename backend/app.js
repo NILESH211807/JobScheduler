@@ -22,7 +22,6 @@ app.use(cors(corsOptions));
 // middleware
 app.use(express.json());
 
-
 // routes
 app.use("/api/jobs", jobsRouter);
 app.use("/api/dash", dashRouter);
