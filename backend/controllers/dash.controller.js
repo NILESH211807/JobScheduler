@@ -1,10 +1,17 @@
-import { pool } from "../connection/db.js";
+import Job from "../model/jon.model.js";
 
-// getDashboard
+// getDashboard (MongoDB / Mongoose)
 export const getDashboard = async (req, res) => {
     try {
-
-        const [rows] = await pool.query(`SELECT status, COUNT(*) AS count FROM jobs GROUP BY status`);
+        // Group by job status using MongoDB aggregation
+        const rows = await Job.aggregate([
+            {
+                $group: {
+                    _id: "$status",
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
 
         const stats = {
             total: 0,
@@ -15,7 +22,8 @@ export const getDashboard = async (req, res) => {
         };
 
         rows.forEach(row => {
-            stats[row.status] = row.count;
+            const status = row._id;   // MongoDB uses _id field for group key
+            stats[status] = row.count;
             stats.total += row.count;
         });
 
@@ -25,7 +33,7 @@ export const getDashboard = async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Error fetching job:', error);
+        console.error("Error fetching dashboard:", error);
         res.status(500).json({
             message: "An error occurred while getting dashboard."
         });

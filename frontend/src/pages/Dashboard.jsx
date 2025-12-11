@@ -40,8 +40,8 @@ export default function Dashboard() {
         task_name: "",
         status: "",
         priority: "",
-        created_at: "",
-        updated_at: "",
+        createdAt: "",
+        updatedAt: "",
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -129,7 +129,7 @@ export default function Dashboard() {
 
             if (response?.message === "Job is running") {
                 setJobs(prev => prev.map(job =>
-                    job.id === id ? { ...job, status: 'running' } : job
+                    job._id === id ? { ...job, status: 'running' } : job
                 ));
             } else {
                 toast.error(response.message || "Something went wrong!");
@@ -148,7 +148,7 @@ export default function Dashboard() {
                     if (response.data.status === 'completed') {
                         setRunningJobIds(prev => prev.filter(id => id !== runningJobIds[0]));
                         setJobs(prev => prev.map(job =>
-                            job.id === runningJobIds[0] ? { ...job, status: 'completed' } : job
+                            job._id === runningJobIds[0] ? { ...job, status: 'completed' } : job
                         ));
                         setStaticJobs(prev => ({ ...prev, running: prev.running - 1, completed: prev.completed + 1 }));
                     }

@@ -19,7 +19,7 @@ export default function ListView({ filteredJobs, onRunJob, getJobDetails }) {
             <div className="divide-y divide-zinc-800">
                 {filteredJobs.length > 0 ? (
                     filteredJobs.map((job) => (
-                        <div key={job.id} className="group p-4 md:grid md:grid-cols-12 md:gap-4 md:items-center hover:bg-zinc-900/50 transition-colors">
+                        <div key={job._id} className="group p-4 md:grid md:grid-cols-12 md:gap-4 md:items-center hover:bg-zinc-900/50 transition-colors">
                             <div className="col-span-5 flex items-start gap-3">
                                 <div className="p-2 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400">
                                     <RefreshCw size={16} />
@@ -27,8 +27,8 @@ export default function ListView({ filteredJobs, onRunJob, getJobDetails }) {
                                 <div>
                                     <div className="font-medium text-zinc-200 text-sm group-hover:text-white transition-colors">{job?.task_name?.length > 50 ? job?.task_name?.slice(0, 30) + "..." : job?.task_name}</div>
                                     <div className="text-xs text-zinc-500 mt-0.5 flex items-center gap-1">
-                                        <span className="font-mono text-[10px] bg-zinc-800 px-1 rounded text-zinc-400">ID-{job.id}</span>
-                                        <span>• Created {dateFormat(job.created_at)}</span>
+                                        <span className="font-mono text-[10px] bg-zinc-800 px-1 rounded text-zinc-400">ID-{job._id}</span>
+                                        <span>• Created {dateFormat(job.createdAt)}</span>
                                     </div>
                                 </div>
                             </div>
@@ -42,13 +42,13 @@ export default function ListView({ filteredJobs, onRunJob, getJobDetails }) {
                             </div>
 
                             <div className="col-span-2 min-md:-ml-7 mt-2 md:mt-0 text-sm text-zinc-400 font-mono text-xs">
-                                {dateFormat(job.updated_at)}
+                                {dateFormat(job.updatedAt)}
                             </div>
 
                             <div className="col-span-1 mt-3 md:mt-0 flex justify-end">
                                 <div className="flex items-center gap-3">
                                     <button
-                                        onClick={() => onRunJob(job.id)}
+                                        onClick={() => onRunJob(job._id)}
                                         disabled={job.status === 'running' || job.status === 'completed'}
                                         className={`
                               h-8 w-8 flex items-center justify-center rounded-md border transition-all

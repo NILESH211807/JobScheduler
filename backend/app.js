@@ -6,6 +6,7 @@ import cors from "cors";
 import jobsRouter from "./routes/job.router.js";
 import dashRouter from "./routes/dash.router.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import { connectDB } from "./connection/db.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -29,9 +30,9 @@ app.use(errorHandler);
 app.use("/api/jobs", jobsRouter);
 app.use("/api/dash", dashRouter);
 
-
 app.get("/", async (req, res) => {
     res.send("Hello World!");
 });
 
+connectDB();
 app.listen(port, () => console.log(`Server running on port ${port}`));

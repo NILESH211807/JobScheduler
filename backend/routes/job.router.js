@@ -7,16 +7,13 @@ const router = express.Router();
 // get all jobs
 router.get('/', getAllJobs);
 
-// create job
+// // create job
 router.post('/create', createJob);
 
-// get job by id
+// // get job by id
 router.get('/:id', getJobById);
 
-// run-job
+// // run-job
 router.post('/run-job/:id', runJobById);
-
-router.post('/job-stats', runJobById);
-
 
 export default router;

@@ -32,7 +32,7 @@ function JobDetails({ job, setIsModalOpen }) {
                             <StatusBadge status={job.status} />
                         </div>
                         <p className="text-zinc-500 text-sm font-mono flex items-center gap-2">
-                            <Hash size={12} /> ID: {job.id}
+                            <Hash size={12} /> ID: {job._id}
                         </p>
                     </div>
                     <button
@@ -62,14 +62,14 @@ function JobDetails({ job, setIsModalOpen }) {
                                 <label className="text-xs font-medium text-zinc-400 capitalize  flex items-center gap-2">
                                     <Calendar size={12} /> Created At
                                 </label>
-                                <p className="text-zinc-200 text-sm font-medium">{job.created_at}</p>
+                                <p className="text-zinc-200 text-sm font-medium">{job.createdAt}</p>
                             </div>
 
                             <div className="space-y-1.5">
                                 <label className="text-xs font-medium text-zinc-400 capitalize flex items-center gap-2">
                                     <RefreshCw size={12} /> Updated At
                                 </label>
-                                <p className="text-zinc-200 text-sm font-medium">{job.updated_at}</p>
+                                <p className="text-zinc-200 text-sm font-medium">{job.updatedAt}</p>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@ function JobDetails({ job, setIsModalOpen }) {
                         <div className="bg-zinc-950 border border-zinc-800 rounded-lg overflow-hidden">
                             {/* Visual Key-Value View */}
                             <div className="grid grid-cols-1 divide-y divide-zinc-800/50">
-                                {Object.entries(JSON.parse(job.payload) || {}).map(([key, value]) => (
+                                {Object.entries(job.payload || {}).map(([key, value]) => (
                                     <div
                                         key={key}
                                         className="flex flex-col sm:flex-row sm:items-start p-3 hover:bg-zinc-900/30 transition-colors gap-2 sm:gap-4"

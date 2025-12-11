@@ -1,8 +1,10 @@
-import { pool } from "../connection/db.js";
 import { faker } from '@faker-js/faker';
+import Job from '../model/jon.model.js';
 
 const createJobSeed = async () => {
     try {
+
+        const jobs = [];
         for (let i = 0; i < 22; i++) {
             const taskName = faker.commerce.productName();
 
@@ -18,13 +20,21 @@ const createJobSeed = async () => {
                 createdBy: faker.internet.username()
             };
 
-            const sql = `INSERT INTO jobs (task_name, priority, status, payload) VALUES (?, ?, ?, ?)`;
-            const values = [taskName, priority, "pending", JSON.stringify(payload)];
+            const job = {
+                task_name: taskName,
+                priority,
+                payload,
+                status: "pending",
+            };
 
-            await pool.query(sql, values);
+            jobs.push(job);
         }
 
-        console.log("✅ Seeded 100 jobs successfully.");
+        // console.log(jobs);
+        await Job.insertMany(jobs);
+
+
+        console.log("✅ Seeded jobs successfully.");
     } catch (error) {
         console.error("❌ Error seeding jobs:", error);
     }
