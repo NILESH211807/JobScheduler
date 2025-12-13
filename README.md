@@ -195,7 +195,7 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/Job-Scheduler-Automation-System.git
+git clone https://github.com/NILESH211807/JobScheduler.git
 cd Job-Scheduler-Automation-System
 ```
 
